@@ -1,0 +1,198 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+
+        .popup {
+            z-index: 10;
+            display: none;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup .background {
+            background-color: rgba(0,0,0,0.2);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+        }
+
+        .popup .content {
+            width: 440px;
+            height: 300px;
+            background-color: #fff;
+            position: absolute;
+            z-index: 20;
+            top: 50%;
+            left: 50%;
+            margin-left: -220px;
+            margin-top: -150px;
+            box-shadow: 0 10px 29px -13px #000;
+        }
+
+        .popup .content .msg {
+            top: 80px;
+            width: 100%;
+            height: 100px;
+            text-align: center;
+            position: relative;
+            display: block;
+            font-size: 18px;
+            color: #5a5a5a;
+            font-weight: bold;
+        }
+
+        .popup .content .btn {
+            position: absolute;
+            bottom: 0;
+            height: 80px;
+            width: 100%;
+            left: 0;
+            text-align: center;
+        }
+
+        .arrow.right:after {
+            top: -10px;
+            left: 50px;
+            border-width: 15px 20px;
+            border-color: transparent transparent transparent #1E90FF;
+        }
+
+        .arrow.right {
+            width: 50px;
+            height: 10px;
+            animation-duration: 1s;
+            animation-name: slidein;
+            animation-iteration-count: infinite;
+            animation-direction:alternate;
+        }
+
+        .arrow:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+
+        }
+
+        @keyframes slidein {
+            from {
+                left: 30px;
+                top: 30px;
+            }
+
+            to {
+                left: 0px;
+                top: 0px;
+            }
+        }
+        
+        .arrow {
+            display: inline-block;
+            background: #1E90FF;
+            position: absolute;
+            margin-right: 30px;
+            transform: rotate(225deg);
+        }
+
+        .arrow_controller {
+            display: none;
+            position: absolute;
+            left: 35px;
+            top: 55px;
+        }
+
+        .arrow_controller.active {
+            display: block;
+        }
+
+        #parameter.active {
+            background-color: white;
+        }
+
+        #view {
+            display: none;
+        }
+
+        #view.active {
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="view">
+    <div>
+        <canvas id="dilation" style="position: absolute"></canvas>
+        <canvas id="rect" style="position: absolute"></canvas>
+        <canvas id="view" class="active" style="position: absolute"></canvas>
+        <canvas id="dot" style="display: none;"></canvas>
+        <img id="pika" src="pika.png" style="position: absolute; display: none">
+    </div>
+
+    <div class="arrow_controller">
+        <span class="arrow right"></span>
+    </div>
+
+
+    <!--<button onclick="dilationExecute()">Next</button>-->
+    <div id="parameter" style="position: absolute; margin: 20px; z-index: 100;">
+        <!--
+        <button onclick="execute()">Next</button>
+        <button id="skip" onclick="toggle()">skip</button>
+        <button onclick="skip()">skip2</button>
+        -->
+        <div>
+            <span>RGBA</span>
+            <span id="rgba"></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="popup">
+    <div class="background"></div>
+    <div class="content">
+        <div id="msg" class="msg">
+
+        </div>
+
+        <div class="btn">
+            <button id="pop_btn" style="width: 70px; height: 40px;">다음</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const popup = document.getElementsByClassName('popup')[0];
+    const view = document.getElementsByClassName('view')[0];
+    const msg = document.getElementById('msg');
+    const arrow = document.getElementsByClassName('arrow_controller')[0];
+    const parameter = document.getElementById('parameter')
+    const view_canvas = document.getElementById('view');
+</script>
+<script src="index.js"></script>
+<script src="scenario.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        popup.classList.add('active')
+        scenario.next();
+    });
+</script>
+</body>
+</html>
